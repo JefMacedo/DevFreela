@@ -41,26 +41,12 @@ namespace DevFreela.Application.Services.Implementations
             _dbContext.ProjectComments.Add(comment);
         }
 
-        public void Delete(int id)
-        {
-            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.Cancel();
-        }
-
-        public void Finish(int id)
-        {
-            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
-
-            project.Finish();
-        }
-
         public List<ProjectViewModel> GetAll(string query)
         {
             var project = _dbContext.Projects;
 
             var projectsViewModel = project
-                .Select(p => new ProjectViewModel(p.Title, p.CreateAt))
+                .Select(p => new ProjectViewModel(p.Id, p.Title, p.CreateAt))
                 .ToList();
 
             return projectsViewModel;
@@ -87,6 +73,20 @@ namespace DevFreela.Application.Services.Implementations
             var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
 
             project.Start();
+        }
+
+        public void Delete(int id)
+        {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            project.Cancel();
+        }
+
+        public void Finish(int id)
+        {
+            var project = _dbContext.Projects.SingleOrDefault(p => p.Id == id);
+
+            project.Finish();
         }
 
         public void update(UpdateProjectInputModel inputModel)
